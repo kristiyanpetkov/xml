@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+    <Employee id="1">
+        <firstname>Ivan</firstname>
+        <lastname>Ivanov</lastname>
+        <age>25</age>
+        <position>programmer</position>
+        <employer>
+            <name>Dimityr Dimitrov</name>
+            <startDate>27.08.1998</startDate>
+            <endDate>16.01.2002</endDate>
+        </employer>
+        <address>
+            <street>Georgi Izmirliev</street>
+            <streetNo>17</streetNo>
+            <section>Veliko Tarnovo</section>
+            <city>Veliko Tarnovo</city>
+        </address>
+    </Employee>
+    <Employee id="2">
+        <firstname>Georgi</firstname>
+        <lastname>Georgiev</lastname>
+        <age>35</age>>
+        <position>doctor</position>
+        <employer>
+            <name>Stefan Georgiev</name>
+            <startDate>15.11.2003</startDate>
+            <endDate>10.03.2007</endDate>
+        </employer>
+        <address>
+            <street>Nikola Gabrovski</street>
+            <streetNo>41</streetNo>
+            <section>Veliko Tarnovo</section>
+            <city>Veliko Tarnovo</city>
+        </address>
+    </Employee>
+    <Employee id="3">
+        <firstname>Mihail</firstname>
+        <lastname>Mihov</lastname>
+        <age>28</age>
+        <position>police officer</position>
+        <employer>
+            <name>Rumyana Bachvarova</name>
+            <startDate>01.01.2015</startDate>
+            <endDate>01.01.2016</endDate>
+        </employer>
+        <address>
+            <street>Bacho Kiro</street>
+            <streetNo>7</streetNo>
+            <section>Veliko Tarnovo</section>
+            <city>Veliko Tarnovo</city>
+        </address>
+    </Employee>
+</employees>
