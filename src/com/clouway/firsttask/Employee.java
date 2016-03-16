@@ -4,12 +4,15 @@ package com.clouway.firsttask;
  * Created by clouway on 16-3-8.
  */
 public class Employee {
-    public String firstname;
-    public String lastname;
-    public Integer age;
-    public String position;
-    public Employer employer;
-    public Address address;
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private String position;
+    private Employer employer;
+    private Address address;
+
+    public Employee() {
+    }
 
     public Employee(String firstname, String lastname, Integer age, String position, Employer employer, Address address) {
         this.firstname = firstname;
@@ -20,8 +23,28 @@ public class Employee {
         this.address = address;
     }
 
-    public Employee() {
+    public String getFirstname() {
+        return firstname;
+    }
 
+    public String getLastname() {
+        return lastname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     @Override

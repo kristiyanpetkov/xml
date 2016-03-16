@@ -4,9 +4,12 @@ package com.clouway.firsttask;
  * Created by clouway on 16-3-8.
  */
 public class Employer {
-    public String name;
-    public String startDate;
-    public String endDate;
+    private String name;
+    private String startDate;
+    private String endDate;
+
+    public Employer() {
+    }
 
     public Employer(String name, String startDate, String endDate) {
         this.name = name;
@@ -14,7 +17,16 @@ public class Employer {
         this.endDate = endDate;
     }
 
-    public Employer() {
+    public String getName() {
+        return name;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
     }
 
     @Override

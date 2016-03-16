@@ -4,10 +4,13 @@ package com.clouway.firsttask;
  * Created by clouway on 16-3-8.
  */
 public class Address {
-    public String street;
-    public Integer streetNo;
-    public String section;
-    public String city;
+    private String street;
+    private Integer streetNo;
+    private String section;
+    private String city;
+
+    public Address() {
+    }
 
     public Address(String street, Integer streetNo, String section, String city) {
         this.street = street;
@@ -16,7 +19,20 @@ public class Address {
         this.city = city;
     }
 
-    public Address() {
+    public String getStreet() {
+        return street;
+    }
+
+    public Integer getStreetNo() {
+        return streetNo;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     @Override

@@ -70,6 +70,7 @@ public class DOMParser {
                 Field field = null;
                 try {
                     field = clazz.getDeclaredField(childName);
+                    field.setAccessible(true);
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 }
@@ -84,12 +85,14 @@ public class DOMParser {
                 Field field = null;
                 try {
                     field = clazz.getDeclaredField(child.getNodeName());
+                    field.setAccessible(true);
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 }
                 if (field.getType() == Integer.class) {
                     try {
                         field.set(instance, new Integer(child.getTextContent()));
+                        field.setAccessible(true);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
@@ -97,6 +100,7 @@ public class DOMParser {
                 if (field.getType() == String.class) {
                     try {
                         field.set(instance, child.getTextContent());
+                        field.setAccessible(true);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
