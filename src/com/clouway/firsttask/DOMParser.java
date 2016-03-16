@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,21 +21,20 @@ import java.util.List;
  */
 public class DOMParser {
 
-    public <T> List<T> parse(Class<T> clazz, File file) {
+    private DocumentBuilder documentBuilder;
 
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = null;
+    public DOMParser(DocumentBuilderFactory dbFactory) throws ParserConfigurationException {
+        documentBuilder = dbFactory.newDocumentBuilder();
+    }
 
-        try {
-            documentBuilder = dbFactory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
+    public <T> List<T> parse(Class<T> clazz, InputStream inputStream) throws DOMParseException{
+
         Document doc = null;
+
         try {
-            doc = documentBuilder.parse(file);
+            doc = documentBuilder.parse(inputStream);
         } catch (SAXException | IOException e) {
-            e.printStackTrace();
+            throw new DOMParseException();
         }
         doc.getDocumentElement().normalize();
 

@@ -1,12 +1,14 @@
 package com.clouway.firsttask;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +21,25 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class DOMParserTest {
 
-    File xmlFile = new File("src/employees.xml");
+    InputStream xmlFile;
 
-    DOMParser domParser = new DOMParser();
+    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 
-    List<Employee> expected = new ArrayList<>();
+    DOMParser domParser;
+    List<Employee> expected = Lists.newArrayList();
 
     @Before
     public void setUp() {
-
+        try {
+            xmlFile = new FileInputStream(new File("src/employees.xml"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            domParser = new DOMParser(dbFactory);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
         Employee employee = new Employee("Ivan", "Ivanov", 25, "programmer", new Employer("Dimityr Dimitrov", "27.08.1998", "16.01.2002"), new Address("Georgi Izmirliev", 17, "Veliko Tarnovo", "Veliko Tarnovo"));
         Employee employee1 = new Employee("Georgi", "Georgiev", 35, "doctor", new Employer("Stefan Georgiev", "15.11.2003", "10.03.2007"), new Address("Nikola Gabrovski", 41, "Veliko Tarnovo", "Veliko Tarnovo"));
         Employee employee2 = new Employee("Mihail", "Mihov", 28, "police officer", new Employer("Rumyana Bachvarova", "01.01.2015", "01.01.2016"), new Address("Bacho Kiro", 7, "Veliko Tarnovo", "Veliko Tarnovo"));
