@@ -20,15 +20,14 @@ import java.util.List;
  * Created by clouway on 16-3-14.
  */
 public class DOMParser {
-
-    private DocumentBuilder documentBuilder;
-
-    public DOMParser(DocumentBuilderFactory dbFactory) throws ParserConfigurationException {
-        documentBuilder = dbFactory.newDocumentBuilder();
-    }
-
     public <T> List<T> parse(Class<T> clazz, InputStream inputStream) throws DOMParseException {
-
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = null;
+        try {
+            documentBuilder = dbFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
         Document doc = null;
 
         try {
@@ -36,8 +35,9 @@ public class DOMParser {
         } catch (SAXException | IOException e) {
             throw new DOMParseException();
         }
-        
+
         doc.getDocumentElement().normalize();
+
         List<T> results = new ArrayList<>();
         NodeList nodeList = doc.getElementsByTagName(clazz.getSimpleName());
 
@@ -48,11 +48,11 @@ public class DOMParser {
                 results.add((t));
             }
         }
+
         return results;
     }
 
     private <T> T parse(Class<T> clazz, Node parrent) {
-
         T instance = null;
 
         try {
@@ -66,53 +66,36 @@ public class DOMParser {
 
         for (int j = 0; j < nodeChilds.getLength(); j++) {
             Node child = nodeChilds.item(j);
-            if (isEmbedded(child)) {
-                String childName = child.getNodeName();
-                Field field = null;
+
+            if (child.getNodeType() != Node.TEXT_NODE) {
                 try {
-                    field = clazz.getDeclaredField(childName);
+                    String childName = child.getNodeName();
+                    Field field = clazz.getDeclaredField(childName);
                     field.setAccessible(true);
+
+                    if (field.getType() == Integer.class) {
+                        field.set(instance, new Integer(child.getTextContent()));
+                        field.setAccessible(true);
+
+                        continue;
+                    }
+
+                    if (field.getType() == String.class) {
+                        field.set(instance, child.getTextContent());
+                        field.setAccessible(true);
+
+                        continue;
+                    }
+
+                    field.set(instance, parse(field.getType(), child));
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
-                }
-                try {
-                    field.set(instance, parse(field.getType(), child));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
-
-            if (child.getNodeType() != Node.TEXT_NODE) {
-                Field field = null;
-                try {
-                    field = clazz.getDeclaredField(child.getNodeName());
-                    field.setAccessible(true);
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-                if (field.getType() == Integer.class) {
-                    try {
-                        field.set(instance, new Integer(child.getTextContent()));
-                        field.setAccessible(true);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (field.getType() == String.class) {
-                    try {
-                        field.set(instance, child.getTextContent());
-                        field.setAccessible(true);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
         }
-        return instance;
-    }
 
-    private boolean isEmbedded(Node node) {
-        int length = node.getChildNodes().getLength();
-        return node.getNodeType() != Node.TEXT_NODE && length > 1;
+        return instance;
     }
 }
