@@ -36,10 +36,11 @@ public class DOMParser {
         } catch (SAXException | IOException e) {
             throw new DOMParseException();
         }
+        
         doc.getDocumentElement().normalize();
-
         List<T> results = new ArrayList<>();
         NodeList nodeList = doc.getElementsByTagName(clazz.getSimpleName());
+
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             if (node.getNodeType() != Node.TEXT_NODE) {
