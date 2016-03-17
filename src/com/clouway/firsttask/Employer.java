@@ -29,6 +29,18 @@ public class Employer {
         return endDate;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
     public String toString() {
         return "Employer{" +

@@ -27,7 +27,7 @@ public class DOMParser {
         documentBuilder = dbFactory.newDocumentBuilder();
     }
 
-    public <T> List<T> parse(Class<T> clazz, InputStream inputStream) throws DOMParseException{
+    public <T> List<T> parse(Class<T> clazz, InputStream inputStream) throws DOMParseException {
 
         Document doc = null;
 
@@ -38,16 +38,16 @@ public class DOMParser {
         }
         doc.getDocumentElement().normalize();
 
-        List<T> employees = new ArrayList<>();
+        List<T> results = new ArrayList<>();
         NodeList nodeList = doc.getElementsByTagName(clazz.getSimpleName());
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE && node.hasChildNodes()) {
+            if (node.getNodeType() != Node.TEXT_NODE) {
                 T t = parse(clazz, node);
-                employees.add((t));
+                results.add((t));
             }
         }
-        return employees;
+        return results;
     }
 
     private <T> T parse(Class<T> clazz, Node parrent) {

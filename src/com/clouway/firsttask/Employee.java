@@ -47,6 +47,30 @@ public class Employee {
         return address;
     }
 
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
