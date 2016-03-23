@@ -19,6 +19,22 @@ public class Address {
         this.city = city;
     }
 
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setStreetNo(Integer streetNo) {
+        this.streetNo = streetNo;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getStreet() {
         return street;
     }

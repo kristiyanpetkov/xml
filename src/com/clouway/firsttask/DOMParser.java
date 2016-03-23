@@ -9,7 +9,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -75,15 +74,11 @@ public class DOMParser {
 
                     if (field.getType() == Integer.class) {
                         field.set(instance, new Integer(child.getTextContent()));
-                        field.setAccessible(true);
-
                         continue;
                     }
 
                     if (field.getType() == String.class) {
                         field.set(instance, child.getTextContent());
-                        field.setAccessible(true);
-
                         continue;
                     }
 
@@ -95,7 +90,6 @@ public class DOMParser {
                 }
             }
         }
-
         return instance;
     }
 }
