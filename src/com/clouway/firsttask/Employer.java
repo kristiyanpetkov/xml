@@ -8,6 +8,16 @@ public class Employer {
     private String startDate;
     private String endDate;
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    private Integer age;
+
     public Employer() {
     }
 
