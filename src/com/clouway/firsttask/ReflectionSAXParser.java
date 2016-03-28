@@ -25,7 +25,6 @@ public class ReflectionSAXParser {
     }
 
     private class MyHandler extends DefaultHandler{
-
         private Class aClass;
         private StringBuilder content = new StringBuilder();
         private List<Object> objects;
