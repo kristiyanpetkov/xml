@@ -17,6 +17,7 @@ import java.util.*;
 public class ReflectionSAXParser {
 
     public <T> List<T> parse(Class<T> clazz, InputStream inputStream) throws IOException, ParserConfigurationException, SAXException, IllegalAccessException, InstantiationException {
+
         List<T> objects = new ArrayList<T>();
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         SAXParser saxParser = saxParserFactory.newSAXParser();
