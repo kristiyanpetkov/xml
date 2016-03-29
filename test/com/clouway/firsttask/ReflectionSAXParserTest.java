@@ -7,6 +7,8 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,29 +20,50 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ReflectionSAXParserTest {
 
-   InputStream xmlFile;
-    ReflectionSAXParser reflectionSAXParser;
-    List<Employee> expected;
-
-    @Before
-    public void setUp() {
-        try {
-            xmlFile = new FileInputStream(new File(getClass().getResource("employees.xml").getPath()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        reflectionSAXParser = new ReflectionSAXParser();
-
-        Employee employee = new Employee("Ivan", "Ivanov", 25, "programmer", new Employer("Dimityr Dimitrov", "27.08.1998", "16.01.2002"), new Address("Georgi Izmirliev", 17, "Veliko Tarnovo", "Veliko Tarnovo"));
-        Employee employee1 = new Employee("Georgi", "Georgiev", 35, "doctor", new Employer("Stefan Georgiev", "15.11.2003", "10.03.2007"), new Address("Nikola Gabrovski", 41, "Veliko Tarnovo", "Veliko Tarnovo"));
-        Employee employee2 = new Employee("Mihail", "Mihov", 28, "police officer", new Employer("Rumyana Bachvarova", "01.01.2015", "01.01.2016"), new Address("Bacho Kiro", 7, "Veliko Tarnovo", "Veliko Tarnovo"));
-        expected = Lists.newArrayList(employee,employee1,employee2);
-    }
+    private InputStream xmlFile;
+    private ReflectionSAXParser reflectionSAXParser = new ReflectionSAXParser();
+    private List<Employee> expected;
 
     @Test
     public void happyPath() throws ParserConfigurationException, IllegalAccessException, InstantiationException, SAXException, IOException {
-        List<Employee> list = reflectionSAXParser.parse(Employee.class,xmlFile);
-        assertThat(expected,is(equalTo(list)));
+        String xmlFile =
+                "<employees>" +
+                "    <Employee>" +
+                "        <firstname>Ivan</firstname>" +
+                "        <lastname>Ivanov</lastname>" +
+                "        <age>25</age>" +
+                "        <position>programmer</position>" +
+                "            <employer>" +
+                "                <name>Dimityr Dimitrov</name>" +
+                "                <startDate>27.08.1998</startDate>" +
+                "                <endDate>16.01.2002</endDate>" +
+                "            </employer>" +
+                "            <address>" +
+                "                <street>Georgi Izmirliev</street>" +
+                "                <streetNo>17</streetNo>" +
+                "                <section>Veliko Tarnovo</section>" +
+                "                <city>Veliko Tarnovo</city>" +
+                "            </address>" +
+                "     </Employee>" +
+                "</employees>";
+
+        InputStream in = new ByteArrayInputStream(xmlFile.getBytes(StandardCharsets.UTF_8));
+
+        Employee want = new Employee("Ivan", "Ivanov", 25, "programmer", new Employer("Dimityr Dimitrov", "27.08.1998", "16.01.2002"), new Address("Georgi Izmirliev", 17, "Veliko Tarnovo", "Veliko Tarnovo"));
+        expected = Lists.newArrayList(want);
+        List<Employee> list = reflectionSAXParser.parse(Employee.class, in);
+        assertThat(expected, is(equalTo(list)));
+    }
+
+    @Test
+    public void employeeNumberTest(){
+        Employee employee = EmployeeBuilder.createEmployee().build();
+        Employee employee5 = EmployeeBuilder.createEmployee().firstname("Ivan").build();
+        Employee employee2 = EmployeeBuilder.createEmployee().build();
+        Employee employee3 = EmployeeBuilder.createEmployee().build();
+        Employee employee4 = EmployeeBuilder.createEmployee().build();
+        List<Employee> emp = Lists.newArrayList(employee,employee2,employee3,employee4,employee5);
+        assertThat(emp.size(),is(5));
+        assertThat("Ivan",is(employee5.getFirstname()));
     }
 }

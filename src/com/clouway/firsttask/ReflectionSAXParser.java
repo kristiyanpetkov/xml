@@ -16,25 +16,16 @@ import java.util.*;
 
 public class ReflectionSAXParser {
 
-    public <T> List<T> parse(Class<T> clazz, InputStream inputStream) throws IOException, ParserConfigurationException, SAXException, IllegalAccessException, InstantiationException {
-
-        List<T> objects = new ArrayList<T>();
-        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-        SAXParser saxParser = saxParserFactory.newSAXParser();
-        saxParser.parse(inputStream, new MyHandler(objects,clazz));
-        return objects;
-    }
-
-    private class MyHandler extends DefaultHandler{
+    private class MyHandler extends DefaultHandler {
         private Class aClass;
         private StringBuilder content = new StringBuilder();
         private List<Object> objects;
-        private Map<String, Object> map= new HashMap<>();
+        private Map<String, Object> map = new HashMap<>();
 
 
-        public MyHandler(List objects,Class aClass){
-            this.objects=objects;
-            this.aClass=aClass;
+        public MyHandler(List objects, Class aClass) {
+            this.objects = objects;
+            this.aClass = aClass;
         }
 
         @Override
@@ -89,5 +80,14 @@ public class ReflectionSAXParser {
             }
             return aClassInstance;
         }
+    }
+
+    public <T> List<T> parse(Class<T> clazz, InputStream inputStream) throws IOException, ParserConfigurationException, SAXException, IllegalAccessException, InstantiationException {
+
+        List<T> objects = new ArrayList<T>();
+        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        SAXParser saxParser = saxParserFactory.newSAXParser();
+        saxParser.parse(inputStream, new MyHandler(objects, clazz));
+        return objects;
     }
 }
