@@ -32,7 +32,7 @@ public class DOMParserTest {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-            domParser = new DOMParser();
+        domParser = new DOMParser();
 
         Employee employee = new Employee("Ivan", "Ivanov", 25, "programmer", new Employer("Dimityr Dimitrov", "27.08.1998", "16.01.2002"), new Address("Georgi Izmirliev", 17, "Veliko Tarnovo", "Veliko Tarnovo"));
         Employee employee1 = new Employee("Georgi", "Georgiev", 35, "doctor", new Employer("Stefan Georgiev", "15.11.2003", "10.03.2007"), new Address("Nikola Gabrovski", 41, "Veliko Tarnovo", "Veliko Tarnovo"));

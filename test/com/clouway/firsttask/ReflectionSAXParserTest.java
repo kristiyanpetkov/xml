@@ -54,16 +54,4 @@ public class ReflectionSAXParserTest {
         List<Employee> list = reflectionSAXParser.parse(Employee.class, in);
         assertThat(expected, is(equalTo(list)));
     }
-
-    @Test
-    public void employeeNumberTest(){
-        Employee employee = EmployeeBuilder.createEmployee().build();
-        Employee employee5 = EmployeeBuilder.createEmployee().firstname("Ivan").build();
-        Employee employee2 = EmployeeBuilder.createEmployee().build();
-        Employee employee3 = EmployeeBuilder.createEmployee().build();
-        Employee employee4 = EmployeeBuilder.createEmployee().build();
-        List<Employee> emp = Lists.newArrayList(employee,employee2,employee3,employee4,employee5);
-        assertThat(emp.size(),is(5));
-        assertThat("Ivan",is(employee5.getFirstname()));
-    }
 }
